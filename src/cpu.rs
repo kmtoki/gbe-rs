@@ -803,7 +803,6 @@ impl CPU {
 
     fn nop(&mut self)  {
         self.log("NOP", OP::None, OP::None, LogInfo::None);
-        //self.tick();
     }
 
     fn jp(&mut self, op: OP)  {
@@ -1648,7 +1647,7 @@ impl CPU {
 
         while self.cycle > 0 {
             self.cycle -= 1;
-            for _ in 0..4 {
+            for _ in 0 .. 4 {
                 self.ppu.step();
                 self.serial();
                 self.timer();
