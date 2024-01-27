@@ -750,9 +750,9 @@ impl CPU {
         if !self.get_negative() {
             adjust |= if self.a & 0x0f > 0x09 { 0x06 } else { 0 };
             adjust |= if self.a > 0x99 { 0x60 } else { 0 };
-            self.a += adjust;
+            self.a = self.a.wrapping_add(adjust);
         } else {
-            self.a -= adjust;
+            self.a = self.a.wrapping_sub(adjust);
         }
         self.set_carry(adjust >= 0x60);
         self.set_half(false);
@@ -1563,7 +1563,7 @@ impl CPU {
 
     fn timer(&mut self) {
         if self.sys_counter % 256 == 0 {
-            self.modify_reg(Reg::DIV, |u| u + 1);
+            self.modify_reg(Reg::DIV, |u| u.overflowing_add(1).0);
         }
 
         let tac = self.read_reg(Reg::TAC);

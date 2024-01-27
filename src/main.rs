@@ -82,15 +82,15 @@ fn main() {
     println!("{}", rom.title);
 
     let mut cpu = CPU::new(PPU::new(select_mbc(rom)));
-    cpu.cpu_logger.logging = true;
-    //display(cpu);
-    loop {
-        if cpu.exe_counter < 26000000 {
-            cpu.step();
-        } else {
-            let ss = cpu.serial_logger.reads(108);
-            println!("{}", String::from_utf8(ss.to_vec()).unwrap());
-            break;
-        }
-    }
+    cpu.cpu_logger.logging = false;
+    display(cpu);
+    //loop {
+    //    if cpu.exe_counter < 26000000 {
+    //        cpu.step();
+    //    } else {
+    //        let ss = cpu.serial_logger.reads(108);
+    //        println!("{}", String::from_utf8(ss.to_vec()).unwrap());
+    //        break;
+    //    }
+    //}
 }
