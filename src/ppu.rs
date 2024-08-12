@@ -134,7 +134,7 @@ impl PPU {
     fn draw_window(&mut self) {
         let lcdc = self.read_reg(Reg::LCDC);
         let wy = self.read_reg(Reg::WY);
-        let wx = self.read_reg(Reg::WX) - 6;
+        let wx = self.read_reg(Reg::WX).overflowing_sub(6).0;
 
         let win_enable = lcdc.get_bit(5);
         if !win_enable { 
@@ -218,7 +218,7 @@ impl PPU {
                         //let ci = (color_id * 2) as usize;
                         //let color = dmg_palette.get_bits(ci..ci+1);
                         //self.buffer_obj[oy+yy+z*8][ox+xx] = color_id;
-                        let yyy = y - obj_len + yy + z * 8;
+                        let yyy = y.overflowing_sub(obj_len).0 + yy + z * 8;
                         let xxx = x - 8 + xx;
                         if yyy < 144 && xxx < 160 && !visible && color_id != 0 {
                             self.buffer[yyy][xxx] = color;

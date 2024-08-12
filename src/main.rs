@@ -28,7 +28,7 @@ fn display(mut cpu: CPU) {
     });
 
     // Limit to max ~60 fps update rate
-    //window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
+    //window.set_target_fps(60);
 
     let mut n = 0;
     'game: loop {
@@ -68,7 +68,6 @@ fn display(mut cpu: CPU) {
                     i += 1;
                 }
             }
-
             window
                 .update_with_buffer(&buffer, WIDTH, HEIGHT)
                 .unwrap();
